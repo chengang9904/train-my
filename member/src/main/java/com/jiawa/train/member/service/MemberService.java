@@ -6,6 +6,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.jiawa.train.common.exception.BusinessException;
 import com.jiawa.train.common.exception.BusinessExceptionEnum;
 import com.jiawa.train.common.resp.MemberLoginResp;
+import com.jiawa.train.common.util.JwtUtil;
 import com.jiawa.train.common.util.SnowUtil;
 import com.jiawa.train.member.domain.Member;
 import com.jiawa.train.member.domain.MemberExample;
@@ -100,12 +101,15 @@ public class MemberService {
         }
 
         // 校验验证码
-        if (!"1111".equals(code)) {
+        if (!"8888".equals(code)) {
             throw new BusinessException(BusinessExceptionEnum.MEMBER_CODE_ERROR);
         }
 
+
         MemberLoginResp resp = new MemberLoginResp();
         BeanUtil.copyProperties(memberDB, resp);
+        String token = JwtUtil.createToken(memberDB.getId(), memberDB.getMobile());
+        resp.setToken(token);
         return resp;
     }
 
