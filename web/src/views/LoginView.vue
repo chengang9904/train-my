@@ -40,10 +40,13 @@
 <script>
 import { defineComponent, reactive } from 'vue';
 import axios from 'axios';
+import { useRouter } from "vue-router";
+import {notification} from "ant-design-vue";
 
 export default defineComponent({
   name: "login-view",
   setup() {
+    const router = useRouter();
 
     const loginForm = reactive({
       mobile: '13000000000',
@@ -63,7 +66,13 @@ export default defineComponent({
 
     const login = () => {
       axios.post("/member/member/login", loginForm).then((response) => {
-        console.log(response);
+        let data = response.data;
+        if (data.success) {
+          notification.success({description: '登录成功'});
+          router.push("/");
+        } else {
+          notification.error({description: data.message})
+        }
       })
     };
 
