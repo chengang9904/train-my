@@ -1,6 +1,8 @@
 package com.jiawa.train.member.service;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.jiawa.train.common.exception.BusinessException;
+import com.jiawa.train.common.exception.BusinessExceptionEnum;
 import com.jiawa.train.member.domain.Member;
 import com.jiawa.train.member.domain.MemberExample;
 import com.jiawa.train.member.mapper.MemberMapper;
@@ -32,9 +34,11 @@ public class MemberService {
         memberExample.createCriteria().andMobileEqualTo(mobile);
         List<Member> list = memberMapper.selectByExample(memberExample);
 
+        // int x = 1 / 0;
+
         if (CollectionUtil.isNotEmpty(list)) {
             // return list.get(0).getId();
-            throw new RuntimeException("该手机号已注册");
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_EXISTS);
         }
 
         Member record = new Member();
