@@ -40,6 +40,7 @@
 <script>
 import { defineComponent, reactive } from 'vue';
 import { RocketTwoTone } from "@ant-design/icons-vue";
+import axios from "axios";
 
 '@ant-design/icons-vue';
 
@@ -55,9 +56,18 @@ export default defineComponent({
       code: '',
     });
 
+    const sendCode = () => {
+      axios.post("http://localhost:8000/member/member/send-code", {
+        mobile: loginForm.mobile
+      }).then(response => {
+        console.log(response);
+      });
+    };
+
 
     return {
       loginForm,
+      sendCode,
     };
   },
 });
