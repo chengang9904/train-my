@@ -8,7 +8,10 @@ import com.jiawa.train.member.domain.Member;
 import com.jiawa.train.member.domain.MemberExample;
 import com.jiawa.train.member.mapper.MemberMapper;
 import com.jiawa.train.member.req.MemberRegisterReq;
+import com.jiawa.train.member.req.MemberSendCodeReq;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.List;
  **/
 @Service
 public class MemberService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MemberService.class);
 
     @Resource
     private MemberMapper memberMapper;
@@ -48,5 +53,35 @@ public class MemberService {
 
         memberMapper.insert(record);
         return record.getId();
+    }
+
+    /**
+     * 发送短信
+     * @param req
+     * @return
+     */
+    public void sendCode(MemberSendCodeReq req) {
+        String mobile = req.getMobile();
+        MemberExample memberExample = new MemberExample();
+        memberExample.createCriteria().andMobileEqualTo(mobile);
+        List<Member> list = memberMapper.selectByExample(memberExample);
+
+        if (CollectionUtil.isEmpty(list)) {
+            LOG.info("手机号未注册");
+            Member record = new Member();
+            record.setId(SnowUtil.getSnowFlakeId());
+            record.setMobile(mobile);
+            memberMapper.insert(record);
+        } else {
+            LOG.info("手机号已注册");
+        }
+
+        // 生成验证码
+        // String code = RandomUtil.randomString(4);
+        String code = "1111";
+        // TODO: 保存到redis中
+
+        // TODO: 发送验证码
+        LOG.info("发送验证码：{}", code);
     }
 }
