@@ -1,6 +1,7 @@
 package com.jiawa.train.common.exception;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Author: chengang
@@ -8,12 +9,18 @@ import lombok.Data;
  * @Version: v1.0.0
  * @Description:
  **/
-@Data
+@Setter
+@Getter
 public class BusinessException extends RuntimeException {
 
     private BusinessExceptionEnum e;
 
     public BusinessException(BusinessExceptionEnum businessExceptionEnum) {
         this.e = businessExceptionEnum;
+    }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
     }
 }
