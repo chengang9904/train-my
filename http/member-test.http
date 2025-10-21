@@ -9,20 +9,27 @@ Accept: application/json
 ###
 
 POST http://localhost:8000/member/member/register
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=13034262377
+{
+  "mobile": "18057501140"
+}
 
 ###
 
 POST http://localhost:8000/member/member/send-code
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=13034262377
+{
+  "mobile": "18057501140"
+}
 
 ###
 
 POST http://localhost:8000/member/member/login
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=13034262377&code=1111
+{
+  "mobile": "18057501140",
+  "code": "1111"
+}
