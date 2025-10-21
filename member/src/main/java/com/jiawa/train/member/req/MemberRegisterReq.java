@@ -1,6 +1,7 @@
 package com.jiawa.train.member.req;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 /**
  * @Author: chengang
@@ -8,27 +9,9 @@ import jakarta.validation.constraints.NotBlank;
  * @Version: v1.0.0
  * @Description:
  **/
+@Data
 public class MemberRegisterReq {
 
     @NotBlank(message = "【手机号】不能为空")
     private String mobile;
-
-    public MemberRegisterReq(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    @Override
-    public String toString() {
-        return "MemberRegisterReq{" +
-                "mobile='" + mobile + '\'' +
-                '}';
-    }
 }

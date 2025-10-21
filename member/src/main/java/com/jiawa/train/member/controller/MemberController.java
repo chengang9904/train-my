@@ -32,6 +32,7 @@ public class MemberController {
 
     @PostMapping("/register")
     public CommonResp<Long> register(@Valid MemberRegisterReq req) {
+        System.out.println(req.getMobile());
         CommonResp<Long> resp = new CommonResp<>();
         resp.setContent(memberService.register(req));
         return resp;
